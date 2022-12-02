@@ -1,29 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../repository/dataAPI.dart';
-import '../viewModels/homeViewModel.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:provider/provider.dart';
+import '../models/myprovider.dart';
+
 
 import 'widget/drawerItem.dart';
 import 'widget/myDrawer.dart';
 
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Home extends StatelessWidget {
+  Home({Key? key}) : super(key: key);
 
-  @override
-  State<Home> createState() => _HomeState();
-}
+  String fullName = '';
+  String email = '';
+  String phone = '';
+  String address = '';
 
-class _HomeState extends State<Home> {
+  DateTime dateOfBirth = DateTime.now();
 
-  var data = HomeViewModel(dataRepository: DataAPI());
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(data.title),
+          title: Text('Contact Info'),
           backgroundColor: Color(0xff05172a),
         ),
         drawer: MyDrawer(),
@@ -31,75 +34,127 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.all(20.w),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextFormField(
+                SizedBox(
+                  height: 20.w,
+                ),
+                Text(
+                  'Contact Information',
+                  style: TextStyle(
+                    fontSize: 20.w,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 20.w,
+                ),
+                TextField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     labelText: 'Full Name',
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (value) {
-
+                    fullName = value;
                   },
+                  controller: TextEditingController(
+                      text: Provider.of<MyProvider>(context).fullName
+                  ),
+
                 ),
                 SizedBox(height: 20.w,),
-                TextFormField(
+                TextField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (value) {
-
+                    email = value;
                   },
+                  controller: TextEditingController(
+                      text: Provider.of<MyProvider>(context).email
+                  ),
                 ),
                 SizedBox(height: 20.w,),
-                TextFormField(
+                TextField(
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     labelText: 'Phone',
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (value) {
-
+                    phone = value;
                   },
+                  controller: TextEditingController(
+                      text: Provider.of<MyProvider>(context).phone
+                  ),
                 ),
                 SizedBox(height: 20.w,),
-                TextFormField(
+                TextField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     labelText: 'Address',
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (value) {
-
+                    address = value;
                   },
+                  controller: TextEditingController(
+                      text: Provider.of<MyProvider>(context).address
+                  ),
                 ),
                 SizedBox(height: 20.w,),
-                TextFormField(
-                  keyboardType: TextInputType.datetime,
-                  decoration: InputDecoration(
-                    labelText: 'Date of Birth',
-                    border: OutlineInputBorder(),
-                  ),
-                  onChanged: (value) {
+                Container(
+                  child: TextField(
+                    showCursor: false,
+                    readOnly: true,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      label: Text('Date of Birth'),
 
-                  },
+                    ),
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: dateOfBirth,
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2100),
+                      ).then((date) {
+                        dateOfBirth = date!;
+                          Provider.of<MyProvider>(context, listen: false).setDateOfBirth(date!.toString().substring(0, 10));
+                      });
+                    },
+                    controller: TextEditingController(
+                        text: Provider.of<MyProvider>(context).dateOfBirth),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 SizedBox(height: 20.w,),
 
                 Container(
-                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xff05172a),
-                    ),
-                    onPressed: () {
+                        onPressed: () {
+                          String fullName0 = Provider.of<MyProvider>(context, listen: false).fullName;
+                          String email0 = Provider.of<MyProvider>(context, listen: false).email;
+                          String phone0 = Provider.of<MyProvider>(context, listen: false).phone;
+                          String address0 = Provider.of<MyProvider>(context, listen: false).address;
+                          String dateOfBirth0 = Provider.of<MyProvider>(context, listen: false).dateOfBirth.toString().substring(0, 10);
+                          Provider.of<MyProvider>(context, listen: false).addContactInfo(fullName==''? fullName0:fullName, email==''? email0:email, phone==''? phone0:phone, address==''? address0:address, dateOfBirth.toString().substring(0, 10) == DateTime.now().toString().substring(0, 10)? dateOfBirth0:dateOfBirth.toString().substring(0, 10));
 
-                    },
-                    child: Text('Save'),
-                  ),
+                          Navigator.pushReplacementNamed(context, '/PersonalStatement');
+
+
+
+                          },
+                        child: const Text('Next'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xff05172a),
+                        ),
+                      ),
                 ),
               ],
             ),

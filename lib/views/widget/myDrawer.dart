@@ -37,11 +37,7 @@ class MyDrawer extends StatelessWidget {
           DrawerItem(item: 'Projects',icon: Icons.folder_open_outlined,pageName: '/Projects',),
           DrawerItem(item: 'Interests',icon: Icons.interests_outlined,pageName: '/Interests',),
           DrawerItem(item: 'References',icon: Icons.group_outlined,pageName: '/References',),
-          DrawerItem(item: 'Add Photo',icon: Icons.photo_outlined,pageName: '/AddPhoto',),
-          Divider(),
-          Text('View & Download CV',style: TextStyle(fontSize: 14),textAlign: TextAlign.center,),
-          DrawerItem(item: 'View CV',icon: Icons.description_outlined,pageName: '/ViewCV',),
-          DrawerItem(item: 'Download CV',icon: Icons.download_outlined,pageName: '/DownloadCV',),
+
 
 
         ],

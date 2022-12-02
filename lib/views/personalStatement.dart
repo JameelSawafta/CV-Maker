@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project2/views/widget/myDrawer.dart';
+import 'package:provider/provider.dart';
+import 'package:project2/models/myprovider.dart';
 
 
 import 'package:flutter/material.dart';
 
 class PersonalStatement extends StatelessWidget {
-  const PersonalStatement({Key? key}) : super(key: key);
+  PersonalStatement({Key? key}) : super(key: key);
+
+  String personalStatement = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
      appBar: AppBar(
-        title: const Text('Personal Statement'),
+        title:  Text('Personal Statement'),
         backgroundColor: Color(0xff05172a),
       ),
       drawer: MyDrawer(),
@@ -21,50 +25,74 @@ class PersonalStatement extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
+               SizedBox(
+                height: 20.w,
               ),
-              const Text(
+               Text(
                 'Personal Statement',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 20.w,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(
-                height: 20,
+               SizedBox(
+                height: 20.w,
               ),
-              const Text(
+               Text(
                 'Write a short paragraph about yourself and your career goals.',
                 style: TextStyle(
                   fontSize: 15,
                 ),
               ),
-              const SizedBox(
-                height: 20,
+               SizedBox(
+                height: 20.w,
               ),
               Container(
                 child: TextField(
                   maxLines: 2,
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Write here...',
+                    labelText: 'Write here...',
+                  ),
+                  onChanged: (value) {
+                    personalStatement = value;
+                  },
+                  controller: TextEditingController(
+                      text: Provider.of<MyProvider>(context).personalStatement
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
+               SizedBox(
+                height: 20.w,
               ),
               Container(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xff05172a),
-                  ),
-                  onPressed: () {
-
-                  },
-                  child: Text('Save'),
+                margin:  EdgeInsets.symmetric(horizontal: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        String personalStatement0 = Provider.of<MyProvider>(context,listen: false).personalStatement;
+                        Provider.of<MyProvider>(context, listen: false).setPersonalStatement(personalStatement == '' ? personalStatement0 : personalStatement);
+                        Navigator.pushReplacementNamed(context, '/ContactInfo');
+                      },
+                      child:  Text('Back'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff05172a),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        String personalStatement0 = Provider.of<MyProvider>(context,listen: false).personalStatement;
+                        Provider.of<MyProvider>(context, listen: false).setPersonalStatement(personalStatement == '' ? personalStatement0 : personalStatement);
+                        Navigator.pushReplacementNamed(context, '/Career');
+                      },
+                      child:  Text('Next'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff05172a),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
