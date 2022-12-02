@@ -200,7 +200,39 @@ class References extends StatelessWidget {
                             }
                         );
                       } catch (e) {
-
+                        await sqlHelper.updateData('test',
+                              {
+                              'id': 1,
+                              'fullName' : Provider.of<MyProvider>(context, listen: false).fullName,
+                              'email' : Provider.of<MyProvider>(context, listen: false).email,
+                              'phone' : Provider.of<MyProvider>(context, listen: false).phone,
+                              'address' : Provider.of<MyProvider>(context, listen: false).address,
+                              'dateOfBirth' : Provider.of<MyProvider>(context, listen: false).dateOfBirth,
+                              'personalStatement' : Provider.of<MyProvider>(context, listen: false).personalStatement,
+                              'companyName' : Provider.of<MyProvider>(context, listen: false).companyName,
+                              'jobTitle' : Provider.of<MyProvider>(context, listen: false).jobTitle,
+                              'companyDetails' : Provider.of<MyProvider>(context, listen: false).companyDetails,
+                              'startDateCareer' : Provider.of<MyProvider>(context, listen: false).startDateCareer,
+                              'endDateCareer' : Provider.of<MyProvider>(context, listen: false).endDateCareer,
+                              'schoolName' : Provider.of<MyProvider>(context, listen: false).schoolName,
+                              'degree' : Provider.of<MyProvider>(context, listen: false).degree,
+                              'fieldOfStudy' : Provider.of<MyProvider>(context, listen: false).fieldOfStudy,
+                              'grade' : Provider.of<MyProvider>(context, listen: false).grade,
+                              'startDateEducation' : Provider.of<MyProvider>(context, listen: false).startDateEducation,
+                              'endDateEducation' : Provider.of<MyProvider>(context, listen: false).endDateEducation,
+                              'keySkills' : Provider.of<MyProvider>(context, listen: false).keySkills,
+                              'projectTitle' : Provider.of<MyProvider>(context, listen: false).projectTitle,
+                              'projectDetails' : Provider.of<MyProvider>(context, listen: false).projectDetails,
+                              'projectStartDate' : Provider.of<MyProvider>(context, listen: false).projectStartDate,
+                              'projectEndDate' : Provider.of<MyProvider>(context, listen: false).projectEndDate,
+                              'interests' : Provider.of<MyProvider>(context, listen: false).interests,
+                              'referenceName' : Provider.of<MyProvider>(context, listen: false).referenceName,
+                              'referenceJobTitle' : Provider.of<MyProvider>(context, listen: false).referenceJobTitle,
+                              'referenceCompany' : Provider.of<MyProvider>(context, listen: false).referenceCompany,
+                              'referencePhone' : Provider.of<MyProvider>(context, listen: false).referencePhone,
+                              'referenceEmail' : Provider.of<MyProvider>(context, listen: false).referenceEmail,
+                              }
+                        );
                       }
 
 
